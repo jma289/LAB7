@@ -1,0 +1,26 @@
+#! /bin/bash
+#----------------------------------------------------
+#  Lawn
+#  Jia-hui Ma
+#  jma289
+#  lab7
+#  bash script emulating Lawn.java
+#----------------------------------------------------
+
+echo "Enter the length and width of the lot, in feet:"
+read widthlot lengthlot
+echo "Enter the length and width of the house, in feet:"
+read widthhouse lengthhouse
+arealot=$( echo "scale=5; $widthlot*$lengthlot" | bc )
+areahouse=$( echo "scale=5; $widthhouse*$lengthhouse" | bc )
+arealawn=$( echo "scale=5; $arealot-$areahouse" | bc )
+echo "The lawn area is $arealawn square feet."
+echo "Enter the mowing rate, in square feet per second:"
+read mowingrate
+time=$( echo "scale=5; $arealawn/$mowingrate" | bc )
+s=$( echo "if($time%1>.5){$time/1+1}else{$time/1}" | bc  )
+m=$( echo "$s/60" | bc  )
+s=$( echo "$s%60" | bc  )
+h=$( echo "$m/60" | bc  )
+m=$( echo "$m%60" | bc  )
+echo "The mowing time is $h hours, $m minutes and $s seconds."
